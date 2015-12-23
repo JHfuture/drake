@@ -107,6 +107,15 @@ classdef StateMachineControl < HybridDrakeSystem
       y=simulate(feedback(h,c),[0 3]);
       playback(v,y);
     end
+    function runSlider
+      h=HopperPlant();
+      c=StateMachineControl(h);
+      v=HopperVisualizer(h);
+%      sys = cascade(feedback(h,c),v);
+%      simulate(sys,[0 inf]);
+      y=simulate(feedback(h,c),[0 3]);
+      v.playback(y,struct('slider',true));
+    end
   end
   
 end
