@@ -1,24 +1,12 @@
 #ifndef __IKOPTIONS_H__
 #define __IKOPTIONS_H__
-//#include "RigidBodyTree.h"
 #include <Eigen/Dense>
+#include "drake/drakeIKoptions_export.h"
 
-#undef drakeIKoptions_DLLEXPORT
-#if defined(WIN32) || defined(WIN64)
-  #if defined(drakeIKoptions_EXPORTS)
-    #define drakeIKoptions_DLLEXPORT __declspec( dllexport )
-  #elif defined(drakeIK_EXPORTS) // because this gets built in both the drakeIKoptions target and the drakeIK target...
-    #define drakeIKoptions_DLLEXPORT __declspec( dllexport )
-  #else
-    #define drakeIKoptions_DLLEXPORT __declspec( dllimport )
-  #endif  
-#else
-  #define drakeIKoptions_DLLEXPORT
-#endif
 
 class RigidBodyTree;
 
-class drakeIKoptions_DLLEXPORT IKoptions
+class DRAKEIKOPTIONS_EXPORT IKoptions
 {
   private:
     RigidBodyTree * robot;
@@ -63,7 +51,7 @@ class drakeIKoptions_DLLEXPORT IKoptions
     void setqd0(const Eigen::VectorXd &lb, const Eigen::VectorXd &ub);
     void setqdf(const Eigen::VectorXd &lb, const Eigen::VectorXd &ub);
     void setAdditionaltSamples(const Eigen::RowVectorXd &t_samples);
-    void updateRobot(const RigidBodyTree * robot);
+    void updateRobot(RigidBodyTree * new_robot);
     void getQ(Eigen::MatrixXd &Q) const;
     void getQa(Eigen::MatrixXd &Qa) const;
     void getQv(Eigen::MatrixXd &Qv) const;
@@ -79,7 +67,6 @@ class drakeIKoptions_DLLEXPORT IKoptions
     void getq0(Eigen::VectorXd &lb, Eigen::VectorXd &ub) const;
     void getqd0(Eigen::VectorXd &lb, Eigen::VectorXd &ub) const;
     void getqdf(Eigen::VectorXd &lb, Eigen::VectorXd &ub) const;
-    void updateRobot(RigidBodyTree * new_robot);
 };
 #endif
 

@@ -5,18 +5,8 @@
 #include <Eigen/Geometry>
 #include <unsupported/Eigen/AutoDiff>
 #include <random>
-#include "drakeGeometryUtil.h"
-
-#undef DLLEXPORT_DRAKEJOINT
-#if defined(WIN32) || defined(WIN64)
-  #if defined(drakeJoints_EXPORTS)
-    #define DLLEXPORT_DRAKEJOINT __declspec( dllexport )
-  #else
-    #define DLLEXPORT_DRAKEJOINT __declspec( dllimport )
-  #endif
-#else
-  #define DLLEXPORT_DRAKEJOINT
-#endif
+#include "drake/util/drakeGeometryUtil.h"
+#include "drake/drakeJoints_export.h"
 
 
 #define POSITION_AND_VELOCITY_DEPENDENT_METHODS(Scalar) \
@@ -29,7 +19,7 @@
 
 class RigidBody;
 
-class DLLEXPORT_DRAKEJOINT DrakeJoint
+class DRAKEJOINTS_EXPORT DrakeJoint
 {
   // disable copy construction and assignment
   //DrakeJoint(const DrakeJoint&) = delete;
@@ -73,6 +63,8 @@ public:
   virtual std::string getVelocityName(int index) const { return getPositionName(index)+"dot"; }
 
   virtual bool isFloating() const { return false; }
+
+  virtual Eigen::VectorXd zeroConfiguration() const = 0;
 
   virtual Eigen::VectorXd randomConfiguration(std::default_random_engine& generator) const = 0;
 
